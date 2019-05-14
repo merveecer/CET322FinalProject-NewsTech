@@ -6,10 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NewsTech.Data
 {
-	public class ApplicationDbContext : IdentityDbContext
+	public class NewsTechDbContext : IdentityDbContext
 	{
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+		public NewsTechDbContext(DbContextOptions<NewsTechDbContext> options)
 			: base(options) {
 		}
+
+		public DbSet<Category> Categories { get; set; }
+		public DbSet<Comment> Comments { get; set; }
+		public DbSet<News> News { get; set; }
 	}
 }
