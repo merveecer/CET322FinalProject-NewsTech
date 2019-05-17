@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NewsTech.Data
 {
-	public class NewsTechDbContext : IdentityDbContext
+	public class NewsTechDbContext : IdentityDbContext<NewsTechUser>
 	{
 		public NewsTechDbContext(DbContextOptions<NewsTechDbContext> options)
 			: base(options) {

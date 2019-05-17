@@ -22,6 +22,7 @@ namespace NewsTech.Areas.Identity.Pages.Account
         private readonly UserManager<NewsTechUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+		private bool isEmployee;
 		public IEnumerable<SelectListItem> GenderList { get; set; }
 		public RegisterModel(
             UserManager<NewsTechUser> userManager,
@@ -37,6 +38,7 @@ namespace NewsTech.Areas.Identity.Pages.Account
 				Text = name,
 				Value = name.ToString()
 			});
+			isEmployee = false;
 		}
 
         [BindProperty]
@@ -70,16 +72,14 @@ namespace NewsTech.Areas.Identity.Pages.Account
 			[StringLength(100)]
 			public string LastName { get; set; }
 
-			[Required]
-			[StringLength(100)]
-			public string City { get; set; }
+			//[Required]
+			//[StringLength(100)]
+			//public string City { get; set; }
 
 			[Required]
 			public DateTime BirthDate { get; set; }
 
-			[Required]
-			public Gender Gender { get; set; }
-			
+		
 			public IEnumerable<SelectListItem> GenderList { get; set; }
 			
 			//MerveEnd
@@ -96,11 +96,11 @@ namespace NewsTech.Areas.Identity.Pages.Account
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
+			{
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new NewsTechUser { UserName = Input.Email, Email = Input.Email };
+				var user = new NewsTechUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, BirthDate = Input.BirthDate , isActive=true,isDeleted=false,CreatedDateTime=DateTime.Now ,isEmployee= this.isEmployee};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

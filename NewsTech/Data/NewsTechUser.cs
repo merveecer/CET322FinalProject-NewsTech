@@ -18,19 +18,13 @@ namespace NewsTech.Data
 		public string LastName { get; set; }
 
 		[Required]
-		[StringLength(100)]
-		public string City { get; set; }
-
-		[Required]
 		public DateTime BirthDate { get; set; }
 
 		public DateTime CreatedDateTime { get; set; }
 
-	
-		public byte Gender { get; set; }
-
 		public bool isDeleted { get; set; }
 		public bool isActive { get; set; }
+		public bool isEmployee { get; set; }
 
 	}
 }
