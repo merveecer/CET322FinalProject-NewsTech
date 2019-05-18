@@ -22,9 +22,10 @@ namespace NewsTech.Data
 
 		public DateTime CreatedDateTime { get; set; }
 
+		public int Gender { get; set; }
 		public bool isDeleted { get; set; }
 		public bool isActive { get; set; }
-		public bool isEmployee { get; set; }
+	
 
 	}
 }

@@ -44,9 +44,20 @@ namespace NewsTech.Controllers
 			return RedirectToAction("index");
 
 		}
+
+
 		public async Task<ActionResult> RemoveAdmin(string id) {
 			var user = await _userManager.FindByIdAsync(id);
 			await _userManager.RemoveFromRoleAsync(user, "admin");
+			return RedirectToAction("index");
+		}
+		public async Task<ActionResult> MakeEditor(string id) {
+			if (!(await _roleManager.RoleExistsAsync("Editor"))) {
+				await _roleManager.CreateAsync(new IdentityRole { Name = "Editor" });
+			}
+			var user = await _userManager.FindByIdAsync(id);
+			await _userManager.AddToRoleAsync(user, "Editor");
+
 			return RedirectToAction("index");
 		}
 	}

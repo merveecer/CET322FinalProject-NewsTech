@@ -22,7 +22,7 @@ namespace NewsTech.Areas.Identity.Pages.Account
         private readonly UserManager<NewsTechUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-		private bool isEmployee;
+	
 		public IEnumerable<SelectListItem> GenderList { get; set; }
 		public RegisterModel(
             UserManager<NewsTechUser> userManager,
@@ -34,11 +34,8 @@ namespace NewsTech.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-			GenderList = Enum.GetNames(typeof(Gender)).Select(name => new SelectListItem() {
-				Text = name,
-				Value = name.ToString()
-			});
-			isEmployee = false;
+			
+
 		}
 
         [BindProperty]
@@ -48,6 +45,9 @@ namespace NewsTech.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+			public InputModel() {
+				GenderList = new List<SelectListItem>();
+			}
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -79,28 +79,36 @@ namespace NewsTech.Areas.Identity.Pages.Account
 			[Required]
 			public DateTime BirthDate { get; set; }
 
-		
+			[Display(Name = "Cinsiyet")]
+			public int SelectedGenderId { get; set; }
 			public IEnumerable<SelectListItem> GenderList { get; set; }
-			
+
 			//MerveEnd
 		}
-		public enum Gender
+		public enum GenderType
 		{
-			Kadın,
-			Erkek,
-			Belirtilmedi
+			Erkek = 1,
+			Kadın = 2
 		}
 		public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-        }
+			IEnumerable<GenderType> GenderType = Enum.GetValues(typeof(GenderType)).Cast<GenderType>();
+			ViewData["Gender"] = from gender in GenderType
+									   select new SelectListItem {
+										   Text = gender.ToString(),
+										   Value = ((int)gender).ToString()
+									   };
+		}
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+		public async Task<IActionResult> OnPostAsync(string returnUrl = null)
 			{
-            returnUrl = returnUrl ?? Url.Content("~/");
+			var gender = Input.SelectedGenderId;
+
+			returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-				var user = new NewsTechUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, BirthDate = Input.BirthDate , isActive=true,isDeleted=false,CreatedDateTime=DateTime.Now ,isEmployee= this.isEmployee};
+				var user = new NewsTechUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, BirthDate = Input.BirthDate , isActive=true,isDeleted=false,CreatedDateTime=DateTime.Now,Gender=gender};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

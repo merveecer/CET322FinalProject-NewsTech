@@ -28,9 +28,11 @@ namespace NewsTech.Models
 		public DateTime Birthdate { get; set; }
 		[Display(Name = "Telefon Numarası")]
 		public string PhoneNumber { get; set; }
+
 		[Display(Name = "Rol")]
 		public virtual IEnumerable<SelectListItem> AvailableRoles { get; set; }
-		public int SelectedRoleId { get; set; }
+		[Display(Name = "Rol")]
+		public string SelectedRoleId { get; set; }
 
 		[Display(Name = "Cinsiyet")]
 		public int SelectedGenderId { get; set; }
@@ -49,7 +51,8 @@ namespace NewsTech.Models
 	}
 	public enum MaritalStatus
 	{
-		Evli = 1,
-		Bekar = 2
+		Bekar = 1,
+		Evli = 2
+		
 	}
 }

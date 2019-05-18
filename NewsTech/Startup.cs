@@ -31,7 +31,7 @@ namespace NewsTech
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
-
+			services.AddTransient<NewsTechDbContext>();//it is taken from stackoverflow https://stackoverflow.com/questions/48767910/entity-framework-core-a-second-operation-started-on-this-context-before-a-previ
 			services.AddDbContext<NewsTechDbContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));

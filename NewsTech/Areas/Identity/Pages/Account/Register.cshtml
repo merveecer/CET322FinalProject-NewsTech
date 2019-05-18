@@ -85,6 +85,16 @@
 									</div>
 									<div class="row">
 										<div class="form-group col-6">
+											<label>Cinsiyet</label>
+											<select class="form-control selectric" asp-items="ViewBag.Gender" asp-for="Input.SelectedGenderId">
+												<option value="0">Cinsiyet Seçiniz...</option>
+												
+											</select>
+										</div>
+										
+									</div>
+									<div class="row">
+										<div class="form-group col-6">
 											<label asp-for="Input.Password"></label>
 											<input asp-for="Input.Password" class="form-control" />
 											<span asp-validation-for="Input.Password" class="text-danger"></span>
@@ -117,7 +127,7 @@
 													<div class="label"></div>
 												</div>*@
 										</div>
-										
+
 									</div>
 									<div class="form-divider">
 										Adres Bilgileri
