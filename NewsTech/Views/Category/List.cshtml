@@ -1,0 +1,76 @@
+﻿@model List<CategoryModel>
+@{ 
+	Layout = "_Layout_Admin";
+}
+	<section class="section">
+		<div class="section-header">
+			<h1>Kategori İşlemleri</h1>
+			<div class="section-header-breadcrumb">
+				<div class="breadcrumb-item"><a href="#">Kategory</a></div>
+				<div class="breadcrumb-item "><a href="#">Kategori İşlemleri</a></div>
+				<div class="breadcrumb-item active">Kategori Listesi</div>
+			</div>
+		</div>
+		<div class="section-body">
+			<h2 class="section-title">Kategori Listesi</h2>
+			<p class="section-lead float-right">
+			</p>
+
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="buttons float-right">
+								<a asp-controller="Category" asp-action="Create" class="btn btn-success"> Kategori Ekle</a>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-striped" id="table-2">
+									<thead>
+										<tr>
+											<th class="text-center">
+												<div class="custom-checkbox custom-control">
+													<input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+													<label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+												</div>
+											</th>
+											<th>Kategori Adı</th>
+											<th>Görüntülenme Sırası</th>
+											<th>Aktiflik Durumu</th>
+											<th>Oluşturma Tarihi</th>
+											<th>Oluşturan Kişi</th>
+											<th>İşlemler</th>
+
+
+										</tr>
+									</thead>
+									<tbody>
+										@foreach (var category in Model) {
+										<tr>
+											<td>
+												<div class="custom-checkbox custom-control">
+													<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="@category.Id">
+													<label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+												</div>
+											</td>
+											<td>@category.Name</td>
+											<td>@category.DisplayOrder</td>
+											<td> <div class="badge @(category.isActive ? " badge-success" : " badge-dark")"> @(category.isActive ? "Aktif": "Pasif")</div></td>
+											<td>@category.CreatedDate</td>
+											<td>@category.CreatorUser.FirstName @category.CreatorUser.LastName</td>
+
+											<td> <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-success">Güncelle</a> <a href="#" class="btn btn-danger">Sil</a></td>
+										</tr>
+										}
+
+
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
