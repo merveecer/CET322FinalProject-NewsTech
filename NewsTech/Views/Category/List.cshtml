@@ -4,10 +4,10 @@
 }
 	<section class="section">
 		<div class="section-header">
-			<h1>Kategori İşlemleri</h1>
+			<h1>Kategori Yönetimi</h1>
 			<div class="section-header-breadcrumb">
 				<div class="breadcrumb-item"><a href="#">Kategory</a></div>
-				<div class="breadcrumb-item "><a href="#">Kategori İşlemleri</a></div>
+				<div class="breadcrumb-item "><a href="#">Kategori Yönetemi</a></div>
 				<div class="breadcrumb-item active">Kategori Listesi</div>
 			</div>
 		</div>
@@ -36,6 +36,7 @@
 											<th>Kategori Adı</th>
 											<th>Görüntülenme Sırası</th>
 											<th>Aktiflik Durumu</th>
+											<th>Yayınlanma Durumu</th>
 											<th>Oluşturma Tarihi</th>
 											<th>Oluşturan Kişi</th>
 											<th>İşlemler</th>
@@ -54,17 +55,17 @@
 											</td>
 											<td>@category.Name</td>
 											<td>@category.DisplayOrder</td>
-											<td> <div class="badge @(category.isActive ? " badge-success" : " badge-dark")"> @(category.isActive ? "Aktif": "Pasif")</div></td>
+
+											<td> <div class="badge @(category.isActive ? " badge-success" : " badge-danger")"> @(category.isActive ? "Aktif" : "Pasif")</div></td>
+
+											<td> <div class="badge @(category.isPublished ? " badge-success" : " badge-danger")"> @(category.isPublished ? "Aktif" : "Pasif")</div></td>
+
 											<td>@category.CreatedDate</td>
 											<td>@category.CreatorUser.FirstName @category.CreatorUser.LastName</td>
 
 											<td> <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-success">Güncelle</a> <a href="#" class="btn btn-danger">Sil</a></td>
 										</tr>
 										}
-
-
-
-
 									</tbody>
 								</table>
 							</div>

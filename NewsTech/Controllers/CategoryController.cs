@@ -33,7 +33,9 @@ namespace NewsTech.Controllers
 					CreatorUser = category.CreatorUser,
 					CreatorUserId = category.CreatorUserId,
 					DisplayOrder = category.DisplayOrder,
-					isActive = category.isActive
+					isActive = category.isActive,
+					isPublished=category.isPublished
+					
 				};
 				categoriesmodel.Add(model);
 			}

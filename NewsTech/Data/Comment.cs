@@ -20,11 +20,11 @@ namespace NewsTech.Data
 
 		public DateTime CreatedDate { get; set; }
 		public int NewsId { get; set; }
-		public virtual News News { get; set; }
+		public virtual Content News { get; set; }
 
 		public int? ParentCommentId { get; set; }
 		[ForeignKey("ParentCommentId")]
-		public Comment ParentComment { get; set; }
+		public virtual Comment ParentComment { get; set; }
 
 		public bool isDeleted { get; set; }
 
