@@ -156,11 +156,11 @@ namespace NewsTech.Controllers
 					_context.Employees.Add(employee);
 					_context.SaveChanges();
 					var idOfAdmin = await _roleManager.GetRoleIdAsync(await _roleManager.FindByNameAsync("admin"));
-					var idOfEditor = await _roleManager.GetRoleIdAsync(await _roleManager.FindByNameAsync("Editor"));
+					//var idOfEditor = await _roleManager.GetRoleIdAsync(await _roleManager.FindByNameAsync("Editor"));
 					if (model.SelectedRoleId == idOfAdmin)
 						MakeAdmin(employee.Id);
-					if (model.SelectedRoleId == idOfEditor)
-						MakeEditor(employee.Id);
+					//if (model.SelectedRoleId == idOfEditor)
+					//	MakeEditor(employee.Id);
 
 				}
 				foreach (var error in result.Errors) {

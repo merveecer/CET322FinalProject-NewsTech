@@ -15,7 +15,7 @@ namespace NewsTech.Models
 			Position = new List<SelectListItem>();
 			ImageUrl = new List<string>();
 			ThumbnailImageUrl = new List<string>();
-			IsReviewVideo = new List<SelectListItem>();
+			ContentType = new List<SelectListItem>();
 		}
 		public int Id { get; set; }
 
@@ -33,7 +33,7 @@ namespace NewsTech.Models
 		public virtual IList<string> ImageUrl { get; set; }
 
 		[Display(Name = "Haber Küçük Resimleri")]
-		public virtual IList<string> ThumbnailImageUrl { get; set; }
+		public virtual ICollection<string> ThumbnailImageUrl { get; set; }
 
 		public  string SelectedImageUrl { get; set; }
 		public  string SelectedThumbnailImageUrl { get; set; }
@@ -51,6 +51,8 @@ namespace NewsTech.Models
 
 		[Display(Name = "Oluşturan Kişi")]
 		public int CreatedUserId { get; set; }
+
+		public string CreatedUserFullName { get; set; }
 		public virtual Employee CreatedUser { get; set; }
 
 		[Display(Name = "Yayınlanma Durumu")]
@@ -61,7 +63,7 @@ namespace NewsTech.Models
 		public int isReviewVideo { get; set; }
 		public IEnumerable<SelectListItem> PublishingStatus { get; set; }
 
-		public IEnumerable<SelectListItem> IsReviewVideo { get; set; }
+		public IEnumerable<SelectListItem> ContentType { get; set; }
 
 		[Display(Name = "Video Anasayfa Pozisyonu")]
 		public int VideoPosition { get; set; }
@@ -69,7 +71,8 @@ namespace NewsTech.Models
 		[Display(Name = "Resim Anasayfa Pozisyonu")]
 		public int ImagePosition { get; set; }
 		public IEnumerable<SelectListItem> Position { get; set; }
-
+		public string CategoryName { get; set; }
+		public int ViewCount { get; set; }
 
 	}
 	public enum PublishStatus
