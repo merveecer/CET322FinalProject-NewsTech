@@ -15,11 +15,13 @@
 						<!-- Hero Post Slider Start -->
 						<div class="post-carousel-1">
 							<!-- Overlay Post Start -->
+
 							@foreach (var item in Model) {
+
 								<div class="post post-large post-overlay hero-post">
 									<div class="post-wrap">
 										<!-- Image -->
-										<div class="image"><img src="~/uploads/@item.SelectedThumbnailImageUrl" alt="post"></div>
+										<div class="image" style="height:326px;"><img src="~/uploads/@item.SelectedThumbnailImageUrl" style="height:326px;" alt="post"></div>
 										<!-- Category -->
 										<a href="#" class="category politic">@item.CategoryName</a>
 										<!-- Content -->
@@ -42,6 +44,7 @@
 										<!-- Image -->
 										<div class="image"><img src="~/uploads/@item.SelectedThumbnailImageUrl" alt="post"></div>
 										<!-- Category -->
+
 										<a href="#" class="category gadgets">@item.CategoryName</a>
 										<!-- Content -->
 										<div class="content">
@@ -64,7 +67,7 @@
 					<div class="order-lg-1 col-lg-3 col-12">
 						<div class="row row-1">
 							<!-- Overlay Post Start -->
-							@foreach (var item in Model) {
+							@foreach (var item in Model.Take(2)) {
 								<div class="post post-overlay hero-post col-lg-12 col-md-6 col-12">
 									<div class="post-wrap">
 										<!-- Image -->
@@ -88,7 +91,7 @@
 					</div>
 					<div class="order-lg-3 col-lg-3 col-12">
 						<div class="row row-1">
-							@foreach (var item in Model) {
+							@foreach (var item in Model.Take(2)) {
 								<!-- Overlay Post Start -->
 								<div class="post post-overlay gradient-overlay-1 hero-post col-lg-12 col-md-6 col-12">
 									<div class="post-wrap">
@@ -136,20 +139,33 @@
 							<div class="post fashion-post post-default-list post-separator-border">
 								<div class="post-wrap">
 									<!-- Image -->
-									<a class="image" href="post-details.html"><img src="~/uploads/@item.SelectedThumbnailImageUrl" alt="post"></a>
+									@if (item.isReviewVideo == 1) {
+										<a class="image" href="post-details.html"><img src="~/uploads/@item.SelectedThumbnailImageUrl" alt="post"></a>}
+									@if (item.isReviewVideo == 2) {
+										<a href="www.youtube.com" class="image video-popup">
+											<img src="~/uploads/@item.SelectedThumbnailImageUrl" alt="post">
+											<!-- Video Popup -->
+											<span class="video-btn"><i class="fa fa-play"></i></span>
+										</a>}
 									<!-- Content -->
+
 									<div class="content">
 										<!-- Title -->
+										<h5>	<a href="#" class="meta-item">@item.CategoryName</a></h5>
 										<h4 class="title"><a asp-action="NewsDetail" asp-controller="Content" asp-route-id=@item.Id>@item.Title</a></h4>
 										<!-- Meta -->
 										<div class="meta fix">
+
+
+
+
 											<a href="#" class="meta-item author"><i class="fa fa-user"></i>@item.CreatedUser.FirstName</a>
 											<span class="meta-item date"><i class="fa fa-clock-o"></i>@item.CreatedDate</span>
 											<a href="#" class="meta-item comment"><i class="fa fa-comments"></i>(34)</a>
 										</div>
 										<!-- Description -->
 										<p>@item.ContentTextPart1</p>
-										
+
 									</div>
 								</div>
 							</div><!-- Post End -->
@@ -180,3 +196,18 @@
 
 	</div>
 </div><!-- Post Section End -->
+<!-- jQuery JS -->
+<script src="~/js/vendor/jquery-1.12.0.min.js"></script>
+<!-- Popper JS -->
+<script src="~/js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="~/js/bootstrap.min.js"></script>
+<!-- Plugins JS -->
+<script src="~/js/plugins.js"></script>
+<!-- rypp JS -->
+<script src="~/js/rypp.js"></script>
+<script src="~/js/ytp-playlist.js"></script>
+<!-- Ajax Mail JS -->
+<script src="~/js/ajax-mail.js"></script>
+<!-- Main JS -->
+<script src="~/js/main.js"></script>

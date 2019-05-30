@@ -73,7 +73,7 @@ namespace NewsTech.Models
 		public IEnumerable<SelectListItem> Position { get; set; }
 		public string CategoryName { get; set; }
 		public int ViewCount { get; set; }
-
+		public IList<Content> IlkIki { get; set; }
 	}
 	public enum PublishStatus
 	{

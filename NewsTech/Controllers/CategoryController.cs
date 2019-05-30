@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using NewsTech.Models;
 
 namespace NewsTech.Controllers
 {
+	[Authorize(Roles = "admin,editor")]
 	public class CategoryController : Controller
 	{
 		private readonly UserManager<NewsTechUser> _userManager;
@@ -20,9 +22,28 @@ namespace NewsTech.Controllers
 			_context = context;
 			_userManager = userManager;
 		}
+		#region Delete
+		public IActionResult Delete(int id) {
+			var category = _context.Categories.Where(x => x.Id == id).FirstOrDefault();
+			if (!(User.IsInRole("admin") || User.IsInRole("editor"))) {
+				return Unauthorized();
+			}
+			if (category != null) {
+				category.isDeleted = true;
+				_context.Categories.Update(category);
+				_context.SaveChanges();
 
+				return RedirectToAction("NewsList");
+			}
+			return NotFound();
+		}
+
+		#endregion
 		#region List
 		public IActionResult List() {
+			if (!(User.IsInRole("admin") || User.IsInRole("editor"))) {
+				return Unauthorized();
+			}
 			var categories = _context.Categories.Include(x => x.CreatorUser).ToList();
 			var categoriesmodel = new List<CategoryModel>();
 			foreach (var category in categories) {
@@ -51,7 +72,7 @@ namespace NewsTech.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Create(CategoryModel model) {
 			var loginUserId = _userManager.GetUserId(User);
-			if (!(User.IsInRole("admin"))) {
+			if (!(User.IsInRole("admin") || User.IsInRole("editor"))) {
 				return Unauthorized();
 			}
 
@@ -77,6 +98,9 @@ namespace NewsTech.Controllers
 
 		#region Edit
 		public IActionResult Edit(int id) {
+			if (!(User.IsInRole("admin") || User.IsInRole("editor"))) {
+				return Unauthorized();
+			}
 			var category = _context.Categories.Where(x => x.Id == id).FirstOrDefault();
 			if (id == 0)
 				return BadRequest();
@@ -93,6 +117,9 @@ namespace NewsTech.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(int? id,CategoryModel model) {
+			if (!(User.IsInRole("admin") || User.IsInRole("editor"))) {
+				return Unauthorized();
+			}
 			var existingCategory = _context.Categories.Where(x => x.Id == id).FirstOrDefault();
 			if (id == 0)
 				return BadRequest();
@@ -100,9 +127,6 @@ namespace NewsTech.Controllers
 			if (existingCategory == null)
 				return NotFound();
 			if (ModelState.IsValid) {
-				if (!User.IsInRole("admin")) {
-					return Unauthorized();
-				}
 				existingCategory.Name = model.Name;
 				existingCategory.DisplayOrder = model.DisplayOrder;
 				existingCategory.isPublished = model.isPublished;

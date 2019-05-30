@@ -62,7 +62,7 @@
 												<td>@employee.Email</td>
 												<td>@employee.Birthdate</td>
 												<td><div class="badge badge-success">Aktif</div></td>
-												<td> <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success">Güncelle</a> <a href="#" class="btn btn-danger">Sil</a></td>
+												<td> <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-success">Güncelle</a> <a asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">Sil</a></td>
 											</tr>
 										}
 

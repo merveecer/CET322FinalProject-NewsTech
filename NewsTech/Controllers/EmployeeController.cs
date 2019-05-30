@@ -91,7 +91,23 @@ namespace NewsTech.Controllers
 
 			return View(employeesmodel);
 		}
+		#region Delete
+		public IActionResult Delete(string id) {
+			var employee = _context.Employees.Where(x => x.Id == id).FirstOrDefault();
+			if (!(User.IsInRole("admin"))) {
+				return Unauthorized();
+			}
+			if (employee != null) {
+				employee.isDeleted = true;
+				_context.Employees.Update(employee);
+				_context.SaveChanges();
 
+				return RedirectToAction("List");
+			}
+			return NotFound();
+		}
+
+		#endregion
 		public IActionResult Create() {
 			EmployeeModel employeeModel = new EmployeeModel();
 			var roles = _context.Roles.OrderBy(x => x.Name).ToList();
@@ -255,7 +271,7 @@ namespace NewsTech.Controllers
 			} else {
 				return View(model);
 			}
-		
+
 		}
 	}
 }

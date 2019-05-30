@@ -61,6 +61,17 @@
 								<a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
 							</div>
 						</div>
+
+						@if (Model.isReviewVideo == 2) {
+
+							<div class="embed-responsive embed-responsive-16by9">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/EbcseTat3aw"
+										frameborder="0" allowfullscreen></iframe>
+							</div>
+
+
+						}
+
 					</div>
 				</div><!-- Single Blog End -->
 				<!-- Post Author Start -->
@@ -299,3 +310,8 @@
 
 	</div>
 </div><!-- Blog Section End -->
+
+<script src="~/khobor/js/plugins.js"></script>
+<!-- rypp JS -->
+<script src="~/khobor/js/rypp.js"></script>
+<script src="~/khobor/js/ytp-playlist.js"></script>

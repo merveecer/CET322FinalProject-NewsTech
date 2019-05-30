@@ -1,0 +1,5 @@
+﻿@model IList<NewsTech.Data.Category>
+@foreach (var item in Model) {
+
+	<li><a asp-action="CategoryContentList" asp-controller="Content" asp-route-id=@item.Id>@item.Name</a></li>
+}

@@ -16,14 +16,20 @@ namespace NewsTech.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+		private readonly NewsTechDbContext _context;
         private readonly SignInManager<NewsTechUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+		private readonly RoleManager<IdentityRole> _roleManager;
+		private readonly UserManager<NewsTechUser> _userManager;
 
-        public LoginModel(SignInManager<NewsTechUser> signInManager, ILogger<LoginModel> logger)
+		public LoginModel(SignInManager<NewsTechUser> signInManager, RoleManager<IdentityRole> roleManager, UserManager<NewsTechUser> userManager, ILogger<LoginModel> logger, NewsTechDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
-        }
+			_context = context;
+				_userManager = userManager;
+			_roleManager = roleManager;
+		}
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -79,8 +85,13 @@ namespace NewsTech.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+					var user = _context.Users.Where(x => x.Email == Input.Email).FirstOrDefault();
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+					var roleName = await _userManager.GetRolesAsync(user);
+					var role = await _roleManager.FindByNameAsync(roleName.FirstOrDefault());
+					if (role.Name == "admin" || role.Name == "editor")
+						return RedirectToAction("Index", "Home");
+					return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
