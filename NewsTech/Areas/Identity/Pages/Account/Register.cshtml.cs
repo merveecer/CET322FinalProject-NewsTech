@@ -50,26 +50,30 @@ namespace NewsTech.Areas.Identity.Pages.Account
 			}
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "E-posta")]
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Şifre")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Şifre Onay")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 			//Merve 12.05.2019
 			[Required]
 			[StringLength(100)]
+			[Display(Name = "Ad")]
+
 			public string FirstName { get; set; }
 
 			[Required]
 			[StringLength(100)]
+			[Display(Name = "Soyad")]
+
 			public string LastName { get; set; }
 
 			//[Required]
@@ -77,6 +81,8 @@ namespace NewsTech.Areas.Identity.Pages.Account
 			//public string City { get; set; }
 
 			[Required]
+			[Display(Name = "Doğum Tarihi")]
+
 			public DateTime BirthDate { get; set; }
 
 			[Display(Name = "Cinsiyet")]

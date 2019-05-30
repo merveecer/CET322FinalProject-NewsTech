@@ -3,7 +3,34 @@
 	ViewData["Title"] = "UserHomePage";
 	Layout = "~/Views/Shared/_Layout_Web.cshtml";
 }
+<!-- Breaking News Section Start -->
+<div class="breaking-news-section section">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
 
+				<!-- Breaking News Wrapper Start -->
+				<div class="breaking-news-wrapper">
+					<!-- Breaking News Title -->
+					<h5 class="breaking-news-title float-left">Güncel Haberler</h5>
+					<!-- Breaking Newsticker Start -->
+					<ul class="breaking-news-ticker float-left">
+						@foreach (var item in Model) {
+							<li><a href="#">@item.Title</a></li>}
+
+						</ul><!-- Breaking Newsticker Start -->
+					<!-- Breaking News Nav -->
+					<div class="breaking-news-nav">
+						<button class="news-ticker-prev"><i class="fa fa-angle-left"></i></button>
+						<button class="news-ticker-next"><i class="fa fa-angle-right"></i></button>
+					</div>
+
+				</div><!-- Breaking News Wrapper End -->
+
+			</div>
+		</div>
+	</div>
+</div><!-- Breaking News Section End -->
 <!-- Hero Section Start -->
 <div class="hero-section section mt-30 mb-30">
 	<div class="container">

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsTech.Data;
 
 namespace NewsTech.Data.Migrations
 {
     [DbContext(typeof(NewsTechDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190527115806_Content")]
+    partial class Content
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,7 +210,9 @@ namespace NewsTech.Data.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("CreatedUserId");
+                    b.Property<int>("CreatedUserId");
+
+                    b.Property<string>("CreatedUserId1");
 
                     b.Property<int>("ImagePosition");
 
@@ -232,7 +236,7 @@ namespace NewsTech.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CreatedUserId");
+                    b.HasIndex("CreatedUserId1");
 
                     b.ToTable("Contents");
                 });
@@ -423,7 +427,7 @@ namespace NewsTech.Data.Migrations
 
                     b.HasOne("NewsTech.Data.Employee", "CreatedUser")
                         .WithMany()
-                        .HasForeignKey("CreatedUserId");
+                        .HasForeignKey("CreatedUserId1");
                 });
 
             modelBuilder.Entity("NewsTech.Data.Employee", b =>

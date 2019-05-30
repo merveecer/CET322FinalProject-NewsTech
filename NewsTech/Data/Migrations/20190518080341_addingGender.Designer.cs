@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsTech.Data;
 
 namespace NewsTech.Data.Migrations
 {
     [DbContext(typeof(NewsTechDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190518080341_addingGender")]
+    partial class addingGender
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,23 +141,11 @@ namespace NewsTech.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatorUserId");
-
-                    b.Property<int>("DisplayOrder");
-
                     b.Property<string>("Name");
-
-                    b.Property<bool>("isActive");
 
                     b.Property<bool>("isDeleted");
 
-                    b.Property<bool>("isPublished");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorUserId");
 
                     b.ToTable("Categories");
                 });
@@ -193,50 +183,6 @@ namespace NewsTech.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("NewsTech.Data.Content", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId");
-
-                    b.Property<string>("ContentTextPart1")
-                        .IsRequired();
-
-                    b.Property<string>("ContentTextPart2");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatedUserId");
-
-                    b.Property<int>("ImagePosition");
-
-                    b.Property<string>("SelectedImageUrl");
-
-                    b.Property<string>("SelectedThumbnailImageUrl");
-
-                    b.Property<string>("Title");
-
-                    b.Property<int>("VideoPosition");
-
-                    b.Property<string>("VideoUrl");
-
-                    b.Property<bool>("isDeleted");
-
-                    b.Property<int>("isPublished");
-
-                    b.Property<int>("isReviewVideo");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatedUserId");
-
-                    b.ToTable("Contents");
-                });
-
             modelBuilder.Entity("NewsTech.Data.Employee", b =>
                 {
                     b.Property<string>("Id")
@@ -255,13 +201,9 @@ namespace NewsTech.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int>("GenderId");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<int>("MaritalStatusId");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired();
@@ -275,6 +217,40 @@ namespace NewsTech.Data.Migrations
                     b.HasIndex("CreatorUserId");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("NewsTech.Data.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoryId");
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("CreatedUserId");
+
+                    b.Property<string>("CreatedUserId1");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<string>("Title");
+
+                    b.Property<bool>("isDeleted");
+
+                    b.Property<bool>("isPublished");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CreatedUserId1");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("NewsTech.Data.NewsTechUser", b =>
@@ -391,21 +367,14 @@ namespace NewsTech.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NewsTech.Data.Category", b =>
-                {
-                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorUserId");
-                });
-
             modelBuilder.Entity("NewsTech.Data.Comment", b =>
                 {
                     b.HasOne("NewsTech.Data.NewsTechUser", "CreatedUser")
                         .WithMany()
                         .HasForeignKey("CreatedUserId1");
 
-                    b.HasOne("NewsTech.Data.Content", "News")
-                        .WithMany()
+                    b.HasOne("NewsTech.Data.News", "News")
+                        .WithMany("Comments")
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -414,23 +383,23 @@ namespace NewsTech.Data.Migrations
                         .HasForeignKey("ParentCommentId");
                 });
 
-            modelBuilder.Entity("NewsTech.Data.Content", b =>
+            modelBuilder.Entity("NewsTech.Data.Employee", b =>
+                {
+                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatorUser")
+                        .WithMany()
+                        .HasForeignKey("CreatorUserId");
+                });
+
+            modelBuilder.Entity("NewsTech.Data.News", b =>
                 {
                     b.HasOne("NewsTech.Data.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NewsTech.Data.Employee", "CreatedUser")
+                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatedUser")
                         .WithMany()
-                        .HasForeignKey("CreatedUserId");
-                });
-
-            modelBuilder.Entity("NewsTech.Data.Employee", b =>
-                {
-                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorUserId");
+                        .HasForeignKey("CreatedUserId1");
                 });
 #pragma warning restore 612, 618
         }

@@ -43,12 +43,11 @@
 						<!-- Header Links -->
 						<ul class="header-links">
 							<li class="disabled block d-none d-md-block"><a href="#"><i class="fa fa-clock-o"></i> @DateTime.Now</a></li>
-							<li class="d-none d-md-block"><a href="#"><i class="fa fa-mixcloud"></i> <span class="weather-degrees">20 <span class="unit">c</span> </span> <span class="weather-location">- Sydney</span></a></li>
 							<li><a asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-user-circle-o"></i>Giriş Yap</a></li>
 							<li><a asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-circle-o"></i>Kayıt Ol</a></li>
 
-							<li><a href="contact-us.html"><i class="fa fa-headphones"></i>Contact</a></li>
-							<li><a href="blog.html">Blog</a></li>
+							<li><a href="contact-us.html"><i class="fa fa-headphones"></i>İletişim</a></li>
+							
 						</ul>
 
 					</div><!-- Header Top Links End -->
@@ -124,35 +123,7 @@
 				</div>
 			</div>
 		</div><!-- Menu Section End -->
-		<!-- Breaking News Section Start -->
-		<div class="breaking-news-section section">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-
-						<!-- Breaking News Wrapper Start -->
-						<div class="breaking-news-wrapper">
-							<!-- Breaking News Title -->
-							<h5 class="breaking-news-title float-left">Güncel Haberler</h5>
-							<!-- Breaking Newsticker Start -->
-							<ul class="breaking-news-ticker float-left">
-								<li><a href="#">Tell me what you today, And i ‘ll tell you who you are!!!</a></li>
-								<li><a href="#">Fashion is about some thing that comes from with in you.</a></li>
-								<li><a href="#">Australia announced squad for Bangladesh tour.</a></li>
-								<li><a href="#">How group of rebel are talking on Banasree epidemic.</a></li>
-							</ul><!-- Breaking Newsticker Start -->
-							<!-- Breaking News Nav -->
-							<div class="breaking-news-nav">
-								<button class="news-ticker-prev"><i class="fa fa-angle-left"></i></button>
-								<button class="news-ticker-next"><i class="fa fa-angle-right"></i></button>
-							</div>
-
-						</div><!-- Breaking News Wrapper End -->
-
-					</div>
-				</div>
-			</div>
-		</div><!-- Breaking News Section End -->
+		
 
 		@RenderBody()
 

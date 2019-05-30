@@ -290,11 +290,10 @@ namespace NewsTech.Controllers
 			} else
 				return View(model);
 		}
+
 		[AllowAnonymous]
 		public IActionResult NewsDetail(int id) {
-			if (!(User.IsInRole("admin") || User.IsInRole("editor"))) {
-				return Unauthorized();
-			}
+			
 			viewCount++;
 			var contentmodel = new ContentModel();
 			var news = _context.Contents.Where(x => x.Id == id).Include(x => x.Category).Include(x => x.CreatedUser).FirstOrDefault();

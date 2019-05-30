@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsTech.Data;
 
 namespace NewsTech.Data.Migrations
 {
     [DbContext(typeof(NewsTechDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190516101536_gendersilme")]
+    partial class gendersilme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +63,62 @@ namespace NewsTech.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -139,23 +197,11 @@ namespace NewsTech.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("CreatorUserId");
-
-                    b.Property<int>("DisplayOrder");
-
                     b.Property<string>("Name");
-
-                    b.Property<bool>("isActive");
 
                     b.Property<bool>("isDeleted");
 
-                    b.Property<bool>("isPublished");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorUserId");
 
                     b.ToTable("Categories");
                 });
@@ -193,7 +239,7 @@ namespace NewsTech.Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("NewsTech.Data.Content", b =>
+            modelBuilder.Entity("NewsTech.Data.News", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,149 +247,57 @@ namespace NewsTech.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<string>("ContentTextPart1")
+                    b.Property<string>("Content")
                         .IsRequired();
-
-                    b.Property<string>("ContentTextPart2");
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("CreatedUserId");
+                    b.Property<int>("CreatedUserId");
 
-                    b.Property<int>("ImagePosition");
+                    b.Property<string>("CreatedUserId1");
 
-                    b.Property<string>("SelectedImageUrl");
-
-                    b.Property<string>("SelectedThumbnailImageUrl");
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("VideoPosition");
-
-                    b.Property<string>("VideoUrl");
-
                     b.Property<bool>("isDeleted");
 
-                    b.Property<int>("isPublished");
-
-                    b.Property<int>("isReviewVideo");
+                    b.Property<bool>("isPublished");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CreatedUserId");
+                    b.HasIndex("CreatedUserId1");
 
-                    b.ToTable("Contents");
-                });
-
-            modelBuilder.Entity("NewsTech.Data.Employee", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("BirthDate");
-
-                    b.Property<DateTime>("CreatedDateTime");
-
-                    b.Property<string>("CreatorUserId");
-
-                    b.Property<string>("Email")
-                        .IsRequired();
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<int>("GenderId");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<int>("MaritalStatusId");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired();
-
-                    b.Property<bool>("isActive");
-
-                    b.Property<bool>("isDeleted");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorUserId");
-
-                    b.ToTable("Employees");
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("NewsTech.Data.NewsTechUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("CreatedDateTime");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<int>("Gender");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
 
                     b.Property<bool>("isActive");
 
                     b.Property<bool>("isDeleted");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
+                    b.HasDiscriminator().HasValue("NewsTechUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -356,7 +310,7 @@ namespace NewsTech.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("NewsTech.Data.NewsTechUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -364,7 +318,7 @@ namespace NewsTech.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("NewsTech.Data.NewsTechUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -377,7 +331,7 @@ namespace NewsTech.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NewsTech.Data.NewsTechUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -385,17 +339,10 @@ namespace NewsTech.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("NewsTech.Data.NewsTechUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("NewsTech.Data.Category", b =>
-                {
-                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorUserId");
                 });
 
             modelBuilder.Entity("NewsTech.Data.Comment", b =>
@@ -404,8 +351,8 @@ namespace NewsTech.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedUserId1");
 
-                    b.HasOne("NewsTech.Data.Content", "News")
-                        .WithMany()
+                    b.HasOne("NewsTech.Data.News", "News")
+                        .WithMany("Comments")
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -414,23 +361,16 @@ namespace NewsTech.Data.Migrations
                         .HasForeignKey("ParentCommentId");
                 });
 
-            modelBuilder.Entity("NewsTech.Data.Content", b =>
+            modelBuilder.Entity("NewsTech.Data.News", b =>
                 {
                     b.HasOne("NewsTech.Data.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NewsTech.Data.Employee", "CreatedUser")
+                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatedUser")
                         .WithMany()
-                        .HasForeignKey("CreatedUserId");
-                });
-
-            modelBuilder.Entity("NewsTech.Data.Employee", b =>
-                {
-                    b.HasOne("NewsTech.Data.NewsTechUser", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorUserId");
+                        .HasForeignKey("CreatedUserId1");
                 });
 #pragma warning restore 612, 618
         }
